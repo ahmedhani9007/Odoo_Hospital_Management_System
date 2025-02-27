@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <!-- Custom Tree View for hms.department -->
+        <record id="hms_department_tree_view" model="ir.ui.view">
+            <field name="name">Departments Tree View</field>
+            <field name="model">hms.department</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name"/>
+                   <field name="capacity"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Custom Form View for hms.department -->
+        <record id="hms_department_form_view" model="ir.ui.view">
+            <field name="name">Departments Form View</field>
+            <field name="model">hms.department</field>
+            <field name="arch" type="xml">
+                <form string="Department">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="capacity"/>
+                            <field name="is_opened"/>
+                            <field name="patient_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Define an action for opening the 'departments' view -->
+        <record id="hms_department_action" model="ir.actions.act_window">
+            <field name="name">Departments</field>
+            <field name="res_model">hms.department</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hms_department_tree_view"/>
+        </record>
+
+        <!-- Root Menu -->
+        <menuitem id="hms_root" name="HMS"/>
+
+        <!-- Menu Item for Departments -->
+        <menuitem id="hms_departments_menu" name="Departments" parent="hms_root" action="hms_department_action"/>
+
+    </data>
+</odoo>

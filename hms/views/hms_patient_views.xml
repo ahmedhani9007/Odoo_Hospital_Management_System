@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+        <!-- Custom Tree View for hms.patient -->
+        <record id="hms_patient_tree_view" model="ir.ui.view">
+            <field name="name">Patients Tree View</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                    <field name="birthdate"/>
+                    <field name="cr_ratio"/>
+                    <field name="blood_type"/>
+                    <field name="state"/> <!-- Add state field in tree view -->
+                </tree>
+            </field>
+        </record>
+
+        <!-- Custom Form View for hms.patient -->
+        <record id="hms_patient_form_view" model="ir.ui.view">
+            <field name="name">Patients Form View</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patient">
+                    <sheet>
+                        <!-- Basic Information Group -->
+                        <group string="Basic Information" colspan="2">
+                            <field name="first_name"/>
+                            <field name="last_name"/>
+                            <field name="birthdate"/>
+                            <field name="state"/> <!-- Add state field -->
+                            <field name="email"/> 
+                        </group>
+
+                        <!-- Medical Information Group -->
+                        <group string="Medical Information" colspan="2">
+                            <field name="history" widget="html"/>
+                            <field name="cr_ratio"/>
+                            <field name="blood_type"/>
+                            <field name="pcr"/>
+                            <field name="image" widget="image"/>
+                        </group>
+
+                        <!-- Additional Information -->
+                        <group string="Additional Information" colspan="2">
+                            <field name="address"/>
+                            <field name="age"/>
+                            <field name="department_capacity" readonly="1"/>
+                            <field name="doctor_ids"/>
+                            <field name="department_id"/>
+                        </group>
+                        
+                        <!-- Separator for better spacing -->
+                        <separator string="Log History" colspan="2"/>
+
+                        <!-- Log History Section -->
+                        <notebook>
+                            <page string="Log History">
+                                <field name="log_ids">
+                                    <tree>
+                                        <field name="log_date"/>
+                                        <field name="created_by"/>
+                                        <field name="description"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="log_date" readonly="1"/>
+                                            <field name="created_by" readonly="1"/>
+                                            <field name="description"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Define an action for opening the 'Patients' view -->
+        <record id="hms_patient_action" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="res_model">hms.patient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hms_patient_tree_view"/>
+        </record>
+
+        <!-- Root Menu -->
+        <menuitem id="hms_root" name="HMS"/>
+
+        <!-- Patients Menu (Child of hms_root) -->
+        <menuitem id="hms_patients_menu" name="Patients" parent="hms_root" action="hms_patient_action"/>
+    </data>
+</odoo>
